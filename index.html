@@ -87,7 +87,7 @@
             backdrop-filter: blur(5px);
         }
 
-        /* Animasi Nadi (Pulse) untuk tapak tangan */
+        /* Animasi Nadi (Pulse) untuk cap ibu jari */
         .pulse-anim {
             animation: pulse 2s infinite;
         }
@@ -173,6 +173,13 @@
 </head>
 <body>
 
+    <!-- Butang Fullscreen (Boleh ditekan oleh AJK teknikal sebelum majlis mula) -->
+    <button onclick="toggleFullScreen()" class="fixed top-4 right-4 z-[100] text-[var(--holo-color)] opacity-30 hover:opacity-100 transition-opacity p-2 border border-[var(--holo-color)] rounded bg-[var(--bg-color)] cursor-pointer" title="Masuk/Keluar Paparan Penuh">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+        </svg>
+    </button>
+
     <!-- Latar Belakang Utama -->
     <div class="hologram-bg"></div>
     <div class="scanlines"></div>
@@ -194,19 +201,19 @@
         </h1>
         
         <div class="relative cursor-pointer" onclick="startSystem()">
-            <!-- SVG Tapak Tangan Futuristik -->
+            <!-- SVG Cap Ibu Jari Futuristik -->
             <div class="w-64 h-64 md:w-80 md:h-80 rounded-full hologram-box flex items-center justify-center pulse-anim">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="w-32 h-32 md:w-48 md:h-48 text-[var(--holo-color)]">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="w-32 h-32 md:w-48 md:h-48 text-[var(--holo-color)]">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
                     <!-- Scan ring -->
-                    <circle cx="12" cy="12" r="11" stroke-dasharray="4 4" class="animate-[spin_10s_linear_infinite]" />
+                    <circle cx="12" cy="12" r="11.5" stroke-dasharray="4 6" class="animate-[spin_10s_linear_infinite]" />
                 </svg>
             </div>
             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div class="w-full h-0.5 bg-[var(--holo-color)] opacity-50 animate-[ping_2s_infinite]"></div>
             </div>
         </div>
-        <p class="mt-12 text-lg md:text-2xl animate-pulse">SILA LETAKKAN TANGAN DI SKRIN</p>
+        <p class="mt-12 text-lg md:text-2xl animate-pulse">SILA LETAKKAN IBU JARI DI SKRIN</p>
     </div>
 
     <!-- FASA 2: SCANNING (Teks berubah-ubah) -->
@@ -300,6 +307,22 @@
     </div>
 
     <script>
+        // Fungsi untuk mengaktifkan paparan penuh (Fullscreen)
+        function toggleFullScreen() {
+            var doc = window.document;
+            var docEl = doc.documentElement;
+
+            var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+            if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                requestFullScreen.call(docEl);
+            }
+            else {
+                cancelFullScreen.call(doc);
+            }
+        }
+
         // Senarai nama rawak untuk kesan "menggodam/mengimbas"
         const randomNames = [
             "MOHAMAD ABIDIN BIN SIPEK", "LING MEE CHOO", "SALIHIN BIN AHMAD",
