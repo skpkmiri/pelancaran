@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gimik Pelancaran Kemerdekaan</title>
+    
+    <!-- Memuatkan Tailwind CSS untuk susun atur yang responsif dan mudah -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Futuristik dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --holo-color: #00f3ff;
+            --holo-dark: #005a75;
+            --success-color: #00ff66;
+            --bg-color: #050a15;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            color: var(--holo-color);
+            font-family: 'Share Tech Mono', monospace;
+            overflow: hidden;
+            user-select: none; /* Elak teks di-highlight di smartboard */
+        }
+
+        /* Latar Belakang Garisan Grid Futuristik */
+        .hologram-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            opacity: 0.3;
+            transform: perspective(500px) rotateX(60deg) scale(2);
+            transform-origin: center bottom;
+            animation: moveGrid 15s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: perspective(500px) rotateX(60deg) scale(2) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) scale(2) translateY(40px); }
+        }
+
+        /* Kesan Scanline (Garisan CRT) */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Tipografi Hologram */
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        
+        .text-glow {
+            text-shadow: 0 0 5px var(--holo-color), 0 0 15px var(--holo-color), 0 0 30px var(--holo-dark);
+        }
+        
+        .text-glow-success {
+            color: var(--success-color);
+            text-shadow: 0 0 5px var(--success-color), 0 0 15px var(--success-color), 0 0 30px #004d1f;
+        }
+
+        .hologram-box {
+            border: 2px solid var(--holo-color);
+            box-shadow: inset 0 0 20px rgba(0, 243, 255, 0.2), 0 0 20px rgba(0, 243, 255, 0.5);
+            background: rgba(0, 243, 255, 0.05);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Animasi Nadi (Pulse) untuk tapak tangan */
+        .pulse-anim {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.7; box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.7); }
+            70% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 30px rgba(0, 243, 255, 0); }
+            100% { transform: scale(0.95); opacity: 0.7; box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
+        }
+
+        /* Kesan Glitch untuk Teks Pelancaran */
+        .glitch-wrapper {
+            position: relative;
+        }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color);
+        }
+        .glitch-text::before {
+            left: 2px; text-shadow: -2px 0 red;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        .glitch-text::after {
+            left: -2px; text-shadow: -2px 0 blue;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(20px, 9999px, 86px, 0); }
+            20% { clip: rect(67px, 9999px, 14px, 0); }
+            40% { clip: rect(32px, 9999px, 53px, 0); }
+            60% { clip: rect(81px, 9999px, 9px, 0); }
+            80% { clip: rect(43px, 9999px, 78px, 0); }
+            100% { clip: rect(12px, 9999px, 34px, 0); }
+        }
+        @keyframes glitch-anim2 {
+            0% { clip: rect(89px, 9999px, 23px, 0); }
+            20% { clip: rect(14px, 9999px, 67px, 0); }
+            40% { clip: rect(56px, 9999px, 12px, 0); }
+            60% { clip: rect(34px, 9999px, 90px, 0); }
+            80% { clip: rect(78px, 9999px, 45px, 0); }
+            100% { clip: rect(21px, 9999px, 87px, 0); }
+        }
+
+        /* Transisi Skrin */
+        .screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+            z-index: 10;
+        }
+        .screen.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Garisan Pengimbas semasa memproses */
+        .scanner-line {
+            width: 100%;
+            height: 4px;
+            background: var(--holo-color);
+            box-shadow: 0 0 15px var(--holo-color), 0 0 30px white;
+            position: absolute;
+            animation: scanLine 2s infinite ease-in-out alternate;
+            z-index: 20;
+        }
+        @keyframes scanLine {
+            0% { top: 10%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 90%; opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Latar Belakang Utama -->
+    <div class="hologram-bg"></div>
+    <div class="scanlines"></div>
+
+    <!-- FASA 1: STANDBY (Tunggu Guru Besar sentuh) -->
+    <div id="screen-1" class="screen active">
+        <div class="relative flex items-center justify-center mb-6 md:mb-8 mt-[-2rem]">
+            <div class="absolute inset-0 rounded-full border-4 border-[var(--holo-color)] opacity-40 border-dashed animate-[spin_8s_linear_infinite]"></div>
+            <div class="absolute inset-0 rounded-full border-2 border-[var(--holo-color)] shadow-[0_0_15px_var(--holo-color),inset_0_0_15px_var(--holo-color)] animate-pulse"></div>
+            <!-- Gantikan logo.png di dalam src di bawah -->
+            <img src="logo.png" 
+                 onerror="this.onerror=null; this.src='https://placehold.co/200x200/050a15/00f3ff?text=LOGO';" 
+                 alt="Logo SKPK Miri" 
+                 class="w-28 h-28 md:w-40 md:h-40 rounded-full object-cover z-10 p-1 bg-[var(--bg-color)]">
+        </div>
+
+        <h1 class="text-3xl md:text-5xl font-orbitron text-glow mb-10 md:mb-12 tracking-widest text-center">
+            SK PENDIDIKAN KHAS MIRI<br><span class="text-xl md:text-2xl mt-4 block">MENUNGGU PENGESAHAN BIOMETRIK</span>
+        </h1>
+        
+        <div class="relative cursor-pointer" onclick="startSystem()">
+            <!-- SVG Tapak Tangan Futuristik -->
+            <div class="w-64 h-64 md:w-80 md:h-80 rounded-full hologram-box flex items-center justify-center pulse-anim">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="w-32 h-32 md:w-48 md:h-48 text-[var(--holo-color)]">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+                    <!-- Scan ring -->
+                    <circle cx="12" cy="12" r="11" stroke-dasharray="4 4" class="animate-[spin_10s_linear_infinite]" />
+                </svg>
+            </div>
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div class="w-full h-0.5 bg-[var(--holo-color)] opacity-50 animate-[ping_2s_infinite]"></div>
+            </div>
+        </div>
+        <p class="mt-12 text-lg md:text-2xl animate-pulse">SILA LETAKKAN TANGAN DI SKRIN</p>
+    </div>
+
+    <!-- FASA 2: SCANNING (Teks berubah-ubah) -->
+    <div id="screen-2" class="screen">
+        <div class="relative w-full max-w-4xl px-8 h-96 flex flex-col items-center justify-center hologram-box rounded-xl">
+            <div class="scanner-line"></div>
+            
+            <h2 class="text-2xl mb-8 font-orbitron tracking-widest text-glow">MENGAKSES PANGKALAN DATA...</h2>
+            
+            <div class="text-left w-full max-w-2xl bg-black bg-opacity-50 p-6 rounded border border-[var(--holo-color)] font-mono text-xl overflow-hidden">
+                <div class="text-gray-400 mb-2">> PENGIMBASAN BIOMETRIK: SELESAI</div>
+                <div class="text-gray-400 mb-2">> MENCARI PADANAN DNA/PROFIL...</div>
+                <div class="flex items-center gap-4 text-3xl font-bold mt-6 h-12">
+                    <span class="text-[var(--holo-color)]">> NAMA:</span>
+                    <span id="random-name" class="text-white text-glow tracking-wider uppercase">...</span>
+                </div>
+            </div>
+            
+            <!-- Elemen UI tambahan untuk nampak 'sibuk' -->
+            <div class="flex gap-4 mt-8">
+                <div class="w-16 h-16 border-t-4 border-[var(--holo-color)] rounded-full animate-spin"></div>
+                <div class="w-16 h-16 border-b-4 border-[var(--holo-color)] rounded-full animate-[spin_1.5s_linear_infinite_reverse]"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FASA 3: MATCHED (Papar info Guru Besar) -->
+    <div id="screen-3" class="screen">
+        <h2 class="text-4xl md:text-6xl font-orbitron text-glow-success mb-10 tracking-widest">
+            AKSES DIBENARKAN
+        </h2>
+        
+        <div class="flex flex-col md:flex-row items-center justify-center gap-10 hologram-box p-10 rounded-2xl max-w-5xl w-[90%] bg-opacity-90">
+            <!-- Gambar Guru Besar -->
+            <!-- Nota: Gambar ini menggunakan placeholder. Anda boleh ganti dengan gb.png -->
+            <div class="relative w-64 h-64 md:w-80 md:h-80 flex-shrink-0">
+                <div class="absolute inset-0 border-4 border-[var(--success-color)] rounded-xl animate-[pulse_2s_infinite]"></div>
+                <!-- Sila pastikan gambar gb.png berada dalam folder yang sama dengan fail ini, ATAU tukar src ini -->
+                <img src="gb.png" 
+                     onerror="this.onerror=null; this.src='https://placehold.co/400x400/050a15/00ff66?text=GURU+BESAR&font=oswald';" 
+                     alt="Guru Besar" 
+                     class="w-full h-full object-cover rounded-xl filter contrast-125 sepia-[.3] hue-rotate-[90deg]">
+                
+                <!-- HUD Overlays on image -->
+                <div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[var(--success-color)]"></div>
+                <div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[var(--success-color)]"></div>
+                <div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-[var(--success-color)]"></div>
+                <div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-[var(--success-color)]"></div>
+            </div>
+            
+            <!-- Maklumat -->
+            <div class="flex flex-col text-center md:text-left gap-4">
+                <div class="text-[var(--success-color)] font-mono text-xl tracking-widest">> ID_PROFIL: VIP-001</div>
+                <h1 class="text-5xl md:text-6xl font-bold font-orbitron text-white text-glow uppercase leading-tight">
+                    Aziz bin Tahir
+                </h1>
+                <h2 class="text-3xl md:text-4xl text-[var(--holo-color)] tracking-wider mt-2">
+                    Guru Besar
+                </h2>
+                <h3 class="text-2xl text-gray-300 tracking-wide">
+                    SK Pendidikan Khas Miri
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- FASA 4: CONFIRMATION (Pelancaran Disahkan) -->
+    <div id="screen-4" class="screen">
+        <div class="glitch-wrapper">
+            <h1 class="text-6xl md:text-8xl font-orbitron text-glow-success font-black tracking-widest text-center uppercase glitch-text" data-text="PELANCARAN DISAHKAN">
+                PELANCARAN DISAHKAN
+            </h1>
+        </div>
+    </div>
+
+    <!-- FASA 5: VIDEO TAYANGAN -->
+    <div id="screen-5" class="screen bg-black z-50">
+        <!-- 
+            PENTING: Gantikan 'src' video di bawah dengan fail video sebenar anda.
+            Contoh: src="video-pelancaran.mp4"
+            Pastikan fail video diletakkan di dalam folder yang sama dengan fail HTML ini.
+        -->
+        <video id="launchVideo" class="w-full h-full object-contain" playsinline>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            Braowser anda tidak menyokong tag video.
+        </video>
+        <!-- Butang bantuan jika video tidak main automatik akibat polisi pelayar -->
+        <button id="forcePlayBtn" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[var(--holo-color)] text-black px-8 py-4 rounded-full font-bold font-orbitron hidden z-50 hover:scale-110 transition">
+            MAINKAN VIDEO
+        </button>
+    </div>
+
+    <script>
+        // Senarai nama rawak untuk kesan "menggodam/mengimbas"
+        const randomNames = [
+            "MOHAMAD ABIDIN BIN SIPEK", "LING MEE CHOO", "SALIHIN BIN AHMAD",
+            "WONG PICK KING", "TING HUA EE", "JACQUELINE TIONG HOE DING",
+            "NUR HIDAYU BINTI YUSOP", "MOHD RAFEEQ BIN SULAIMAN", "FAZRI BIN BAKERI",
+            "KHAIRI BIN SAHARI", "SABARIAH BINTI SOLHI", "HILWA HAYATI BINTI MOHAMAD AJALAN",
+            "JIMMY ANAK PETER", "BRYAN ANAK CONSTANT"
+        ];
+
+        let audioCtx;
+        
+        // Membina sistem bunyi (SFX) tanpa perlukan fail MP3 luaran
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+        }
+
+        // Fungsi untuk membunyikan "beep"
+        function playBeep(freq, type = 'square', vol = 0.05, duration = 0.1) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            
+            gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        // Fungsi untuk membunyikan kod kejayaan (Chord)
+        function playSuccessSound() {
+            if (!audioCtx) return;
+            // Mainkan beberapa not serentak untuk efek 'gempak'
+            playBeep(440, 'sine', 0.2, 1.5); // A4
+            playBeep(554.37, 'sine', 0.2, 1.5); // C#5
+            playBeep(659.25, 'sine', 0.2, 1.5); // E5
+            
+            setTimeout(() => { playBeep(880, 'sine', 0.3, 2.0); }, 200); // A5 tinggi
+        }
+
+        // Fungsi Peralihan Skrin
+        function showScreen(screenId) {
+            // Tutup semua skrin
+            document.querySelectorAll('.screen').forEach(s => {
+                s.classList.remove('active');
+            });
+            // Buka skrin yang dipilih
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function startSystem() {
+            // 1. Inisialisasi Audio sebaik sahaja skrin disentuh
+            initAudio();
+            playBeep(800, 'square', 0.1, 0.2); // Bunyi sentuhan pertama
+            
+            // 2. Pergi ke Skrin Imbasan (Fasa 2)
+            showScreen('screen-2');
+            
+            // Logik Tukar Nama Rawak (Hacker effect)
+            const nameElement = document.getElementById('random-name');
+            let scanBeepInterval = setInterval(() => {
+                // Tukar teks
+                const randomIndex = Math.floor(Math.random() * randomNames.length);
+                nameElement.innerText = randomNames[randomIndex];
+                // Bunyi pengimbas
+                playBeep(Math.random() * 500 + 400, 'sawtooth', 0.02, 0.05);
+            }, 80); // Tukar setiap 80ms
+
+            // 3. Selepas 3 saat imbasan, tunjuk hasil yang betul (Fasa 3)
+            setTimeout(() => {
+                clearInterval(scanBeepInterval);
+                nameElement.innerText = "AZIZ BIN TAHIR";
+                nameElement.classList.add('text-glow-success');
+                nameElement.classList.remove('text-[var(--holo-color)]');
+                
+                playBeep(1200, 'sine', 0.1, 0.5); // Bunyi lock-in
+                
+                setTimeout(() => {
+                    showScreen('screen-3');
+                    playSuccessSound(); // Main bunyi berjaya
+                }, 500); // Rehat sekejap sebelum tunjuk kad profil
+                
+                // 4. Selepas 4 saat di Fasa 3, tunjuk Pelancaran Disahkan (Fasa 4)
+                setTimeout(() => {
+                    showScreen('screen-4');
+                    // Bunyi dramatik untuk pengesahan pelancaran
+                    playBeep(150, 'sawtooth', 0.3, 3);
+                    playBeep(200, 'square', 0.2, 3);
+                    
+                    // 5. Selepas 3 saat, mainkan video (Fasa 5)
+                    setTimeout(() => {
+                        showScreen('screen-5');
+                        const video = document.getElementById('launchVideo');
+                        
+                        // Cuba mainkan video. Polisi pelayar mungkin halang autoplay walaupun dengan interaksi awal
+                        const playPromise = video.play();
+                        
+                        if (playPromise !== undefined) {
+                            playPromise.catch(error => {
+                                console.log("Autoplay dihalang:", error);
+                                // Tunjuk butang backup jika video gagal dimainkan
+                                document.getElementById('forcePlayBtn').classList.remove('hidden');
+                                document.getElementById('forcePlayBtn').addEventListener('click', function() {
+                                    video.play();
+                                    this.classList.add('hidden');
+                                });
+                            });
+                        }
+                        
+                        // Bila video tamat, ulang semula ke skrin pertama (Pilihan)
+                        /* 
+                        video.onended = function() {
+                            showScreen('screen-1');
+                        };
+                        */
+                        
+                    }, 3500);
+                    
+                }, 4000); // Masa untuk hadirin baca dan tengok profil
+                
+            }, 3000); // Tempoh mengimbas rawak (3 saat)
+        }
+    </script>
+</body>
+</html>
