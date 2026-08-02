@@ -289,21 +289,9 @@
         </div>
     </div>
 
-    <!-- FASA 5: VIDEO TAYANGAN -->
+    <!-- FASA 5: VIDEO TAYANGAN (Menggunakan YouTube) -->
     <div id="screen-5" class="screen bg-black z-50">
-        <!-- 
-            PENTING: Gantikan 'src' video di bawah dengan fail video sebenar anda.
-            Contoh: src="video-pelancaran.mp4"
-            Pastikan fail video diletakkan di dalam folder yang sama dengan fail HTML ini.
-        -->
-        <video id="launchVideo" class="w-full h-full object-contain" playsinline>
-            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-            Braowser anda tidak menyokong tag video.
-        </video>
-        <!-- Butang bantuan jika video tidak main automatik akibat polisi pelayar -->
-        <button id="forcePlayBtn" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[var(--holo-color)] text-black px-8 py-4 rounded-full font-bold font-orbitron hidden z-50 hover:scale-110 transition">
-            MAINKAN VIDEO
-        </button>
+        <iframe id="youtubeVideo" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
 
     <script>
@@ -424,29 +412,10 @@
                     // 5. Selepas 3 saat, mainkan video (Fasa 5)
                     setTimeout(() => {
                         showScreen('screen-5');
-                        const video = document.getElementById('launchVideo');
+                        const ytFrame = document.getElementById('youtubeVideo');
                         
-                        // Cuba mainkan video. Polisi pelayar mungkin halang autoplay walaupun dengan interaksi awal
-                        const playPromise = video.play();
-                        
-                        if (playPromise !== undefined) {
-                            playPromise.catch(error => {
-                                console.log("Autoplay dihalang:", error);
-                                // Tunjuk butang backup jika video gagal dimainkan
-                                document.getElementById('forcePlayBtn').classList.remove('hidden');
-                                document.getElementById('forcePlayBtn').addEventListener('click', function() {
-                                    video.play();
-                                    this.classList.add('hidden');
-                                });
-                            });
-                        }
-                        
-                        // Bila video tamat, ulang semula ke skrin pertama (Pilihan)
-                        /* 
-                        video.onended = function() {
-                            showScreen('screen-1');
-                        };
-                        */
+                        // Masukkan pautan YouTube dengan tetapan autoplay=1
+                        ytFrame.src = "https://www.youtube.com/embed/vc7Gdil6qJ0?autoplay=1&controls=1&rel=0&modestbranding=1";
                         
                     }, 3500);
                     
